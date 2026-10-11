@@ -6,7 +6,7 @@
 - Verified four selectable EXR layers, MP4/JPEG/EXIF switching, and EXR → JPEG → EXR pixel type `RGB F16 → RGB U8 → RGB F16`, without persistent stale output or observed crash.
 - Close All clears every Information row. A PowerShell clipboard sentinel confirmed Copy with empty information replaces stale clipboard text.
 
-**Six new exact-head screenshots:** [Open verification gallery](https://github.com/BackendArchitectX/DJV/blob/pr-919-evidence/pr-evidence/919/README.md). Images are on the existing evidence branch; **no feature-code commit** was added. The PR description also retains the 10 historical screenshots.
+**Eleven exact-head screenshot panels, including five additional panels from previously completed tests:** [Open verification gallery](https://github.com/BackendArchitectX/DJV/blob/pr-919-evidence/pr-evidence/919/README.md). Images are on the existing evidence branch; **no feature-code commit** was added. The PR description also retains the 10 historical screenshots (21 linked images total).
 
 **Evidence limit:** An intermediate media-reference observer update may occur before the new video-layer callback; transient behavior has not been directly instrumented. There is no automated Information-panel GUI capture on Windows (`DJV_TESTS_NO_GL=ON`).
 

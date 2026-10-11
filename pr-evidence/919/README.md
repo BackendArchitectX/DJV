@@ -41,6 +41,41 @@ Evidence branch: `pr-919-evidence` (screenshots kept separate from feature code 
 
 ![Clipboard sentinel passed](./16-clipboard-sentinel-pass.webp)
 
+
+## Additional screenshots from earlier completed clean-head manual tests
+
+These five panels juxtapose original captured screenshots from the same commit. They document **previously performed** checks; they do not represent newly executed tests.
+
+### 17. Clean-head query word-order check
+
+`name channels` and `channels name` both show File Name and Audio Channels on the same MP4.
+
+![17 Clean-head query word-order check](./17-current-head-query-order.webp)
+
+### 18. Clean-head duplicate Duration and Copy
+
+The `duration` query shows Video Duration and Audio Duration separately; the matching clipboard output contains those two sections.
+
+![18 Clean-head duplicate Duration and Copy](./18-current-head-duration-and-copy.webp)
+
+### 19. Clean-head missing required term
+
+`name nonexistent123` produces no visible Information rows; the accompanying Notepad screenshot shows blank pasted output. A separate clipboard sentinel conclusively tested clearing on Close All.
+
+![19 Clean-head missing required term](./19-current-head-missing-term-empty.webp)
+
+### 20. Clean-head MP4 to JPEG and back
+
+With `name channels` kept active, MP4 matches, JPEG returns no rows under the provisional strict-AND behavior, and the MP4 rows return on switching back.
+
+![20 Clean-head MP4 to JPEG and back](./20-current-head-mp4-jpeg-mp4.webp)
+
+### 21. Clean-head EXIF to MP4 transition
+
+`focallength photographic` matches two EXIF metadata rows on the JPEG; with the query unchanged, the MP4 displays no matching rows.
+
+![21 Clean-head EXIF to MP4 transition](./21-current-head-exif-to-mp4.webp)
+
 ## Limits and pending decisions
 
 - These are real manual GUI screenshots from a clean exact-head Windows build, **not** automated Information-panel screenshot tests.

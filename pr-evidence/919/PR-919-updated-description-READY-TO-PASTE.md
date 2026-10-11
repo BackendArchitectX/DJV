@@ -189,7 +189,7 @@ Observed the same rows as `name channels`, File → Name (`sample-5s-360p.mp4`) 
 
 ## Clean-head Windows GUI and clipboard screenshots (new)
 
-The six new images were captured from the actual Windows Debug application at `b6b70d3`, with irrelevant areas cropped. They are hosted in the existing `pr-919-evidence` branch at immutable [evidence commit `85ed0e6fa`](https://github.com/BackendArchitectX/DJV/commit/85ed0e6fa90cf6e35ef454c0c9efe0369a15e707), **not** in the feature branch. The earlier 10 screenshots remain above as historical evidence. A [separate evidence gallery](https://github.com/BackendArchitectX/DJV/blob/pr-919-evidence/pr-evidence/919/README.md) provides a compact summary.
+The first six clean-head panels (#11–16) were captured from the actual Windows Debug application at `b6b70d3`, with unrelated areas cropped, and were preserved in immutable [evidence commit `85ed0e6fa`](https://github.com/BackendArchitectX/DJV/commit/85ed0e6fa90cf6e35ef454c0c9efe0369a15e707). Five additional composites (#17–21) preserve other previously performed clean-head manual checks on the separate evidence branch. **No image-only evidence commit changed the feature PR head.** The original 10 images remain earlier in the description. A [separate evidence gallery](https://github.com/BackendArchitectX/DJV/blob/pr-919-evidence/pr-evidence/919/README.md) provides a compact summary.
 
 ### 11. Real EXIF search
 Query `focallength photographic` shows exactly two metadata rows: `Exif:FocalLength: 50` and `Exif:PhotographicSensitivity: 200`.
@@ -221,7 +221,39 @@ A PowerShell test preloaded `DJV_PR919_OLD_CONTENT`, invoked DJV's Copy with an 
 
 ![16 Clipboard sentinel PASS](https://raw.githubusercontent.com/BackendArchitectX/DJV/85ed0e6fa90cf6e35ef454c0c9efe0369a15e707/pr-evidence/919/16-clipboard-sentinel-pass.webp)
 
-**Evidence limitations:** These are real manual GUI checks, not automated Information-panel GUI-capture tests. They prove correct final content, not absence of a transient intermediate observer refresh; that potential stale-layer initialization path has not been directly instrumented. Windows local CTest uses `DJV_TESTS_NO_GL=ON`.
+
+## Additional current-head evidence from previously completed manual checks (#17–21)
+
+The following five composites pair original screenshots from tests performed at clean head `b6b70d3`. They add **evidence**, not additional test execution. All five files are on the independent `pr-919-evidence` branch, keeping PR #919's tested feature commit unchanged.
+
+### 17. Clean-head query word-order check
+`name channels` and `channels name` both show File Name and Audio Channels on the same MP4.
+
+![17 Clean-head query word-order check](https://raw.githubusercontent.com/BackendArchitectX/DJV/pr-919-evidence/pr-evidence/919/17-current-head-query-order.webp)
+
+### 18. Clean-head duplicate Duration and Copy
+The `duration` query shows Video Duration and Audio Duration separately; the matching clipboard output contains those two sections.
+
+![18 Clean-head duplicate Duration and Copy](https://raw.githubusercontent.com/BackendArchitectX/DJV/pr-919-evidence/pr-evidence/919/18-current-head-duration-and-copy.webp)
+
+### 19. Clean-head missing required term
+`name nonexistent123` produces no visible Information rows; the accompanying Notepad screenshot shows blank pasted output. A separate clipboard sentinel conclusively tested clearing on Close All.
+
+![19 Clean-head missing required term](https://raw.githubusercontent.com/BackendArchitectX/DJV/pr-919-evidence/pr-evidence/919/19-current-head-missing-term-empty.webp)
+
+### 20. Clean-head MP4 to JPEG and back
+With `name channels` kept active, MP4 matches, JPEG returns no rows under the provisional strict-AND behavior, and the MP4 rows return on switching back.
+
+![20 Clean-head MP4 to JPEG and back](https://raw.githubusercontent.com/BackendArchitectX/DJV/pr-919-evidence/pr-evidence/919/20-current-head-mp4-jpeg-mp4.webp)
+
+### 21. Clean-head EXIF to MP4 transition
+`focallength photographic` matches two EXIF metadata rows on the JPEG; with the query unchanged, the MP4 displays no matching rows.
+
+![21 Clean-head EXIF to MP4 transition](https://raw.githubusercontent.com/BackendArchitectX/DJV/pr-919-evidence/pr-evidence/919/21-current-head-exif-to-mp4.webp)
+
+**Evidence limitations:** These are real manual GUI checks, not automated Information-panel GUI-capture tests. They prove correct final content, not absence of a transient intermediate observer refresh; that potential stale-layer initialization path has not been directly instrumented. Windows local CTest uses `DJV_TESTS_NO_GL=ON`. 
+**Additional cases not claimed as passed:** An end-to-end GUI test of explicit literal `AND`, unquoted `Sample Rate`/`Start Time`/`Source Format` semantics, Unicode and punctuation behavior, copy of multiline metadata values, heavy-metadata performance, and debugger-level proof of intermediate video-layer observer state are not established by these screenshots. Parser semantics need maintainer confirmation before treating these as requirements.
+
 
 ## Reproduction steps
 
