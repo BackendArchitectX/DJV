@@ -1,0 +1,80 @@
+## Summary
+
+Addresses [#316](https://github.com/grizzlypeak3d/DJV/issues/316) with **provisional implied-AND search** in DJV's Information panel, and consolidates the focused test-discovery correction from superseded [PR #918](https://github.com/grizzlypeak3d/DJV/pull/918). The shared Recent Files capture fixture correction is included only once.
+
+**Search semantics are pending maintainer confirmation.** Currently, every *parsed* term must match somewhere in the active panel; if all terms exist, rows matching **at least one** term are displayed in File, Video, Audio, Metadata section order. Otherwise no rows are displayed. Matching is case-insensitive across field labels and values. The parser recognizes a few multiword field labels and the Filename/Dimensions aliases for Name/Resolution. Literal `AND`, quoted phrases, regex and saved searches are not implemented.
+
+## Changes
+
+- Extract Information row matching into `InfoSearch.h` and register `InfoSearchBaselineTest` and `InfoSearchAndTest` within `djv-test`.
+- Update results when selected media/reference or video layer changes; Copy exports currently displayed rows without empty section headings.
+- Apply PR #918's isolated `.github/workflows/pr-check.yml` fix in commit [`b6b70d3`](https://github.com/BackendArchitectX/DJV/commit/b6b70d3fe1feb15cf2f9ebc9fa282979b8d68634): build with `ci-linux` (enables `DJV_TESTS`), remove `--rerun-failed`, add `--no-tests=error` and a 600-second timeout. Broader push workflows remain unchanged.
+- Correct `tests/capture/capture.json` Recent Files fixture by substituting `ColorPatternPortrait.png` for unavailable `Charlie.jpg`, and `portrait` for `charl`. This **does not** constitute an automated Information-panel GUI test.
+
+## Questions for maintainer
+
+1. For `name duration resolution`, must **all** terms exist somewhere in the current panel before displaying the **union** of matching rows (current implementation), or should any available matches remain visible if a term is absent?
+2. Should every **unquoted word** remain independent, or should recognized multiword field labels be grouped into phrases, even when their words appear across distinct rows?
+3. Is a literal `AND` operator required? The current parser treats `AND` as an ordinary search term.
+
+The difference is user-visible: under the current algorithm, `name duration` can display more rows than `name`. These details are **not yet an approved contract**.
+
+## Verification on exact feature head
+
+Head: [`b6b70d3fe1feb15cf2f9ebc9fa282979b8d68634`](https://github.com/BackendArchitectX/DJV/commit/b6b70d3fe1feb15cf2f9ebc9fa282979b8d68634) (6 commits, 9 changed files).
+
+| Evidence | Observed result | Boundary |
+| --- | --- | --- |
+| [Fork push CI #38123431720](https://github.com/BackendArchitectX/DJV/actions/runs/38123431720) | **12 successful matrix jobs**, release job skipped as expected | Push workflow, not upstream PR workflow |
+| Linux CTest | **12/12 CTest targets**, 17 internal `djv-test` classes, no failures, both search classes executed | Not an automated Information-panel GUI test |
+| Linux GLES3 CTest | **12/12 targets**, including Recent Files capture | Recent Files capture does not test Information search |
+| Windows Debug build + local CTest | Build passed; **1/1 CTest target**, 17 internal classes, zero failures | `DJV_TESTS_NO_GL=ON`: no Windows GUI capture |
+| Clean-head GUI | Cross-row search, duplicate Duration, Copy including empty/filtered output, real EXIF, MP4/JPEG and 4-layer EXR changes, Close All, clipboard sentinel | Manual observed final states, not intermediate observer timing |
+| [Upstream PR workflow #38123434957](https://github.com/grizzlypeak3d/DJV/actions/runs/38123434957) | **`action_required`, zero jobs executed** | Requires authorized upstream action; **not a pass** |
+
+Real EXIF manual check showed `Exif:FocalLength=50` and `Exif:PhotographicSensitivity=200`; filtered Copy retained those rows. Type query on EXR -> JPEG -> EXR displayed `RGB F16 -> RGB U8 -> RGB F16` at the observed final states.
+
+[Clean-head evidence gallery (11 panels)](https://github.com/BackendArchitectX/DJV/blob/ca8e2c11d4dbeeab4a0ee729c8e80e77340d611e/pr-evidence/919/README.md) | [Complete original description, 21 screenshot links and historical CI/reproduction records](https://github.com/BackendArchitectX/DJV/blob/ca8e2c11d4dbeeab4a0ee729c8e80e77340d611e/pr-evidence/919/pr-919-description-before-review-cleanup-20261012.md)
+
+## Reproduction
+
+1. Open `sample-5s-360p.mp4`, then Tools -> Information. Search `name channels`; observe File Name and Audio Channels.
+2. Search `duration`; observe both Video and Audio Duration. Search `pixel aspect ratio channels` to exercise provisional phrase grouping.
+3. Keep `name channels` active and switch to `sample-photo-1920x1080.jpg`; under the current strict presence rule no rows display. Switch back to MP4 and confirm matching rows return.
+4. Use Copy and check that only visible nonempty sections are included. Close All and check the prior clipboard value is not retained when Copy is pressed again.
+
+## Review gates and scope
+
+- [x] One consolidated PR (#919); #918 closed as superseded. The workflow correction is in one focused commit and the shared PNG fixture applied once.
+- [x] Verified same-head fork CI and local GUI/CTest; evidence branch does not alter feature commits.
+- [x] Source-level observer investigation: `InfoWidget::setPlayer` can read a previous video-layer index before the new observer initializes. This order **predates the PR**; bounds fallback exists and the tested final states were correct. No runtime trace or user-visible glitch was established. No unrelated fix is included.
+- [ ] Confirm final search semantics with maintainer, then make only necessary code-and-test changes.
+- [ ] Obtain upstream PR-workflow authorization and passing tests on the final applicable head.
+
+<details>
+<summary>Original #919 feature summary (verbatim)</summary>
+
+> Provisional **implied-AND filtering** for the DJV **Information** panel (related to #316). Search is case-insensitive across field labels and values in File, Video, Audio and Metadata. When every **parsed** term is found somewhere in the current panel, display matching rows; otherwise display none. The exact semantics are pending maintainer feedback, so maintainer feedback is requested before finalizing the search contract.
+
+</details>
+
+<details>
+<summary>Original #918 summary and rationale (preserved)</summary>
+
+The independent #918 PR described the following scope before consolidation:
+
+> Fix the PR workflow to ensure tests are executed and prevent false-positive CI results when no tests are discovered.
+
+Its implementation and motivation were:
+
+- Use the existing `ci-linux` configuration to enable `DJV_TESTS`.
+- Remove `--rerun-failed` to execute the complete registered test suite.
+- Add `--no-tests=error` to fail when no tests are discovered.
+- Set a 600-second timeout for test execution.
+- A previous successful PR workflow reported **`No tests were found!!!`**, allowing a green test step without executing tests.
+
+Its original validation stated that the workflow change was limited to two lines and that `git diff --check` passed, with Linux CI pending at the time of submission. Subsequently, its separate fork branch [CI run #38093051943](https://github.com/BackendArchitectX/DJV/actions/runs/38093051943) succeeded. This historical run validates **that branch only**, not the new combined commit.
+
+</details>
+
+For auditability, the [immutable pre-cleanup PR description](https://github.com/BackendArchitectX/DJV/blob/ca8e2c11d4dbeeab4a0ee729c8e80e77340d611e/pr-evidence/919/pr-919-description-before-review-cleanup-20261012.md) contains all 21 original screenshot links, earlier test runs, detailed scope discussions and evidence limitations. This replacement is a **description-only** review cleanup; no change to feature code is implied.
