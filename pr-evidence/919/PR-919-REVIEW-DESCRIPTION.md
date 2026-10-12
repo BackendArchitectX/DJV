@@ -36,6 +36,144 @@ Real EXIF manual check showed `Exif:FocalLength=50` and `Exif:PhotographicSensit
 
 [Clean-head evidence gallery (11 panels)](https://github.com/BackendArchitectX/DJV/blob/ca8e2c11d4dbeeab4a0ee729c8e80e77340d611e/pr-evidence/919/README.md) | [Complete original description, 21 screenshot links and historical CI/reproduction records](https://github.com/BackendArchitectX/DJV/blob/ca8e2c11d4dbeeab4a0ee729c8e80e77340d611e/pr-evidence/919/pr-919-description-before-review-cleanup-20261012.md)
 
+## Visual evidence — all 21 screenshots
+
+The **21 images below are embedded inline** (not collapsed). All source image paths were verified on the immutable [evidence snapshot](https://github.com/BackendArchitectX/DJV/tree/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919). Screenshots 11–21 document clean-head checks from `b6b70d3`; the five composites 17–21 reuse existing clean-head captures, rather than representing new tests. Screenshots 01–10 are historical/supporting evidence and are explicitly distinguished from exact-head proof.
+
+### Clean-head GUI evidence (screenshots 11–21)
+
+#### 11. Real EXIF metadata search
+
+![11 — Real EXIF metadata search](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/11-exif-search-exact-head.webp)
+
+*Exact-head manual check: focallength photographic matches Exif:FocalLength=50 and Exif:PhotographicSensitivity=200.*
+
+#### 12. Copy filtered EXIF metadata
+
+![12 — Copy filtered EXIF metadata](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/12-exif-copy-output.webp)
+
+*Exact-head manual check: copied Metadata includes the displayed EXIF matches.*
+
+#### 13. EXR with four selectable layers
+
+![13 — EXR with four selectable layers](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/13-exr-four-layers.webp)
+
+*Exact-head manual check: Combined, DiffCol, GlossDir and Normal.*
+
+#### 14. EXR → JPEG → EXR pixel type
+
+![14 — EXR → JPEG → EXR pixel type](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/14-pixel-type-exr-jpeg-exr.webp)
+
+*Exact-head manual check: final displayed types RGB F16 → RGB U8 → RGB F16, without observed persistent stale output.*
+
+#### 15. Close All clears Information
+
+![15 — Close All clears Information](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/15-close-all-clears-information.webp)
+
+*Exact-head manual check: zero visible rows after Close All.*
+
+#### 16. Clipboard sentinel
+
+![16 — Clipboard sentinel](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/16-clipboard-sentinel-pass.webp)
+
+*Exact-head manual check: empty Copy replaces a preloaded old clipboard value.*
+
+#### 17. Search term order
+
+![17 — Search term order](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/17-current-head-query-order.webp)
+
+*Composite from earlier clean-head checks: name channels and channels name display the same results.*
+
+#### 18. Duplicate Duration and Copy
+
+![18 — Duplicate Duration and Copy](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/18-current-head-duration-and-copy.webp)
+
+*Composite from earlier clean-head checks: both Duration rows and their copied output.*
+
+#### 19. Missing required term
+
+![19 — Missing required term](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/19-current-head-missing-term-empty.webp)
+
+*Composite from earlier clean-head checks: name nonexistent123 displays no rows and an empty paste.*
+
+#### 20. MP4 → JPEG → MP4 switch
+
+![20 — MP4 → JPEG → MP4 switch](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/20-current-head-mp4-jpeg-mp4.webp)
+
+*Composite from earlier clean-head checks: matches disappear on JPEG and reappear on MP4.*
+
+#### 21. EXIF → MP4 switch
+
+![21 — EXIF → MP4 switch](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/21-current-head-exif-to-mp4.webp)
+
+*Composite from earlier clean-head checks: EXIF query matches JPEG but not MP4.*
+
+### Historical and supporting evidence (screenshots 01–10)
+
+These earlier screenshots document the implementation's progression. Some were captured from a **dirty working tree**, and screenshot 08 is only an inventory of JPEG files. They do **not** independently validate the final feature head.
+
+#### 01. Cross-section search: name channels
+
+![01 — Cross-section search: name channels](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/01-cross-section-name-channels.png)
+
+*Historical capture: File Name and Audio Channels. Not proof of the final clean head.*
+
+#### 02. Duplicate Duration fields
+
+![02 — Duplicate Duration fields](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/02-both-video-and-audio-durations.png)
+
+*Historical capture: Video Duration and Audio Duration are displayed.*
+
+#### 03. Multiword label with Channels
+
+![03 — Multiword label with Channels](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/03-multiword-pixel-aspect-ratio-channels.png)
+
+*Historical capture: Pixel Aspect Ratio and Audio Channels under provisional phrase parsing.*
+
+#### 04. Switch to JPEG without audio
+
+![04 — Switch to JPEG without audio](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/04-media-switch-no-audio-no-results.png)
+
+*Historical capture: name channels has no result on JPEG under current strict presence rule.*
+
+#### 05. Return to MP4
+
+![05 — Return to MP4](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/05-media-switch-return-to-video.png)
+
+*Historical capture: the matching rows reappear after switching back.*
+
+#### 06. Copy filtered rows
+
+![06 — Copy filtered rows](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/06-filtered-clipboard-only-visible-sections.png)
+
+*Historical capture: only nonempty displayed sections appear in the clipboard.*
+
+#### 07. JPEG details
+
+![07 — JPEG details](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/07-image-jpeg-metadata-1920x1080.png)
+
+*Historical capture: 1920 x 1080 JPEG information and no Audio rows.*
+
+#### 08. Supporting JPEG file inventory
+
+![08 — Supporting JPEG file inventory](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/08-downloads-two-jpeg-files-CROPPED.png)
+
+*Cropped filenames in Downloads; not evidence of opening or testing EXIF in DJV.*
+
+#### 09. Working-tree GUI smoke test
+
+![09 — Working-tree GUI smoke test](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/09-local-gui-name-channels-working-tree.png)
+
+*Historical dirty-build screenshot: name channels, not an exact clean-head validation.*
+
+#### 10. Reverse query in working tree
+
+![10 — Reverse query in working tree](https://raw.githubusercontent.com/BackendArchitectX/DJV/c5e37fad0475f3f33bb96482b9d3473ccf960cf9/pr-evidence/919/10-local-gui-channels-name-working-tree.png)
+
+*Historical dirty-build screenshot: channels name, not exact clean-head validation.*
+
+---
+
 ## Reproduction
 
 1. Open `sample-5s-360p.mp4`, then Tools -> Information. Search `name channels`; observe File Name and Audio Channels.
